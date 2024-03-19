@@ -30,7 +30,7 @@
 
 using namespace std;
 
-void LoadImages(const string &strFile, vector<string> &vstrImageFilenames,
+int LoadImages(const string &strFile, vector<string> &vstrImageFilenames,
                 vector<double> &vTimestamps);
 
 int main(int argc, char **argv)
@@ -45,8 +45,12 @@ int main(int argc, char **argv)
     vector<string> vstrImageFilenames;
     vector<double> vTimestamps;
     string strFile = string(argv[3])+"/rgb.txt";
-    LoadImages(strFile, vstrImageFilenames, vTimestamps);
-
+    int a = LoadImages(strFile, vstrImageFilenames, vTimestamps);
+    
+    if (a==0) {
+	cout << "Error: Exiting Program" << endl;
+	return 0;
+    }
     int nImages = vstrImageFilenames.size();
 
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
@@ -125,11 +129,18 @@ int main(int argc, char **argv)
     return 0;
 }
 
-void LoadImages(const string &strFile, vector<string> &vstrImageFilenames, vector<double> &vTimestamps)
+int LoadImages(const string &strFile, vector<string> &vstrImageFilenames, vector<double> &vTimestamps)
 {
     ifstream f;
     f.open(strFile.c_str());
-
+	
+    if (!f.is_open()) {
+	    cout << "Failed to open file: "<< strFile.c_str() << endl;
+	    return 0;
+    }
+    else {
+	    cout << "File opened successfully" <<endl;
+    }
     // skip first three lines
     string s0;
     getline(f,s0);
@@ -152,4 +163,5 @@ void LoadImages(const string &strFile, vector<string> &vstrImageFilenames, vecto
             vstrImageFilenames.push_back(sRGB);
         }
     }
+    return 1;
 }

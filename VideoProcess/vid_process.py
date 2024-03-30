@@ -63,13 +63,16 @@ with open(txt_path + "\\rgb.txt", 'w') as f:
 
             frame = contrast_weighted(frame)
 
+            # 13-362 in x, 12-344 in y
+            frame = frame[13:363,12:344]
+
             timestamp = ('%.6f' % (i / fps)).zfill(17)
             imgNumber = str(i).zfill(5)
             frameFileName = str(f'{imgNumber}.png')
-
+            print(frameFileName)
             cv2.imwrite(im_path + "\\" + frameFileName, frame)
             cv2.imshow('Video', frame)
-
+            
             f.write(f"{timestamp} rgb/{frameFileName}\n")
 
         else:

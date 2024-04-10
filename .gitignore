@@ -21,4 +21,5 @@ Vocabulary/ORBvoc.txt
 build/
 *~
 lib/
-
+VideoProcess/Output_cropped
+VideoProcess/Output_cropped1

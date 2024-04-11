@@ -821,6 +821,7 @@ void ORBextractor::ComputeKeyPointsOctTree(vector<vector<KeyPoint> >& allKeypoin
                     {
                         (*vit).pt.x+=j*wCell;
                         (*vit).pt.y+=i*hCell;
+                        // cull here???????
                         vToDistributeKeys.push_back(*vit);
                     }
                 }

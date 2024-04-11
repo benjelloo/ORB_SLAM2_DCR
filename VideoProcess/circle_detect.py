@@ -13,7 +13,7 @@ def crop(img_path,filename,save_path):
     h,w = img.size
     center = [184,166]
     radius = 178
-    feather = 0
+    feather = 2
     start_pt = [center[0]-radius+feather,center[1]-radius+feather]
     end_pt = [center[0]+radius-feather,center[1]+radius-feather]
     print(start_pt,end_pt)

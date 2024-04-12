@@ -59,6 +59,8 @@
 #include <opencv2/features2d/features2d.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <vector>
+//adding iostream for cout to validate culling algo
+#include <iostream>
 
 #include "ORBextractor.h"
 
@@ -786,6 +788,11 @@ void ORBextractor::ComputeKeyPointsOctTree(vector<vector<KeyPoint> >& allKeypoin
         const int wCell = ceil(width/nCols);
         const int hCell = ceil(height/nRows);
 
+        const int frameCenterX = 184;
+        const int frameCenterY = 166;
+        const int frameRadius = 178;
+        const int feather = 50; // # of pixels to decrease radius by
+
         for(int i=0; i<nRows; i++)
         {
             const float iniY =minBorderY+i*hCell;
@@ -821,8 +828,15 @@ void ORBextractor::ComputeKeyPointsOctTree(vector<vector<KeyPoint> >& allKeypoin
                     {
                         (*vit).pt.x+=j*wCell;
                         (*vit).pt.y+=i*hCell;
-                        // cull here???????
-                        vToDistributeKeys.push_back(*vit);
+
+                        // if the pt is out of the circular frame then don't add to vToDistributeKeys
+                        if ((*vit).pt.x > frameCenterX + frameRadius - feather || (*vit).pt.x < frameCenterX - frameRadius + feather || (*vit).pt.y > frameCenterY + frameRadius - feather || (*vit).pt.y < frameCenterY - frameRadius + feather) {
+                            std::cout << "point culled with coord: (" << (*vit).pt.x << ", " << (*vit).pt.y << ")" << endl;
+                            continue;
+                        }
+                        else {
+                            vToDistributeKeys.push_back(*vit);
+                        }
                     }
                 }
 

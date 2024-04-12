@@ -39,6 +39,7 @@ Viewer::Viewer(System* pSystem, FrameDrawer *pFrameDrawer, MapDrawer *pMapDrawer
 
     mImageWidth = fSettings["Camera.width"];
     mImageHeight = fSettings["Camera.height"];
+
     if(mImageWidth<1 || mImageHeight<1)
     {
         mImageWidth = 640;
@@ -136,7 +137,10 @@ void Viewer::Run()
 
         cv::Mat im = mpFrameDrawer->DrawFrame();
         //add circle to see the cull radius (need to manually change these params rn
-        cv::circle(im, cv::Point(184,166), 178-30, cv::Scalar(255, 0, 255), 1, cv::LINE_AA);
+        // cv::circle(im, cv::Point(184,166), 178-30, cv::Scalar(255, 0, 255), 1, cv::LINE_AA);
+        int halfWidth = mImageWidth / 2;
+        int halfHeight = mImageHeight / 2;
+        cv::circle(im, cv::Point(halfWidth, halfHeight), int(0.8 * halfWidth), cv::Scalar(255, 0, 255), 1, cv::LINE_AA);
 
         cv::imshow("ORB-SLAM2: Current Frame",im);
         cv::waitKey(mT);

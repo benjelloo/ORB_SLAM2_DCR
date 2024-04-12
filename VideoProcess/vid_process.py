@@ -4,8 +4,8 @@ import os
 
 # Camera Settings
 fps = 30
-resizeWidth  = 640
-resizeHeigth = 360
+resizeWidth  = 501
+resizeHeigth = 501
 frameSize = (resizeWidth, resizeHeigth)
 video_file = "vid4.mp4"
 video_capture = cv2.VideoCapture(video_file)
@@ -56,15 +56,12 @@ with open(txt_path + "\\rgb.txt", 'w') as f:
 
         if ret:
             # resize frame, optional you may not need this
-            frame = cv2.resize(frameOrig, frameSize)
-            #frame = frameOrig
+            frame = frameOrig
 
-            frame = frame[0:resizeHeigth-1, 133:505]
+            frame = frame[15:717, 274:976]
+            frame = cv2.resize(frame, frameSize)
 
             frame = contrast_weighted(frame)
-
-            # 13-362 in x, 12-344 in y
-            frame = frame[13:363,12:344]
 
             timestamp = ('%.6f' % (i / fps)).zfill(17)
             imgNumber = str(i).zfill(5)

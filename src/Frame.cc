@@ -188,20 +188,8 @@ Frame::Frame(const cv::Mat &imGray, const double &timeStamp, ORBextractor* extra
     mvLevelSigma2 = mpORBextractorLeft->GetScaleSigmaSquares();
     mvInvLevelSigma2 = mpORBextractorLeft->GetInverseScaleSigmaSquares();
 
-    // Detect Circle in Frame 1
-    if (mbInitialComputations) {
-
-    }
     // ORB extraction
     ExtractORB(0,imGray);
-    int a = mvKeys.size(); //#pts pre culling
-    // Cull points outside of bounding circle
-    int radius = 180; //178 from hough transform detection
-    int center[] = { 184,166 };
-    //CullPoints(radius, center);
-    if (a!=mvKeys.size()) 
-        cout << "precull: " << a << ", culled: "<<mvKeys.size() << endl;
-
 
     N = mvKeys.size();
 
@@ -263,18 +251,6 @@ void Frame::ExtractORB(int flag, const cv::Mat &im)
         (*mpORBextractorLeft)(im,cv::Mat(),mvKeys,mDescriptors);
     else
         (*mpORBextractorRight)(im,cv::Mat(),mvKeysRight,mDescriptorsRight);
-}
-
-void Frame::CullPoints(int radius, int center[])
-{
-    for (auto it = mvKeys.begin(); it != mvKeys.end();) {
-        if (std::sqrt(std::pow(it->pt.x - center[0], 2) + std::pow(it->pt.y - center[1], 2))>=radius) {
-            it = mvKeys.erase(it);
-        }
-        else {
-            it++;
-        }
-    }
 }
 
 void Frame::SetPose(cv::Mat Tcw)

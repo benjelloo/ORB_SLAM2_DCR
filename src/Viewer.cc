@@ -136,7 +136,7 @@ void Viewer::Run()
 
         cv::Mat im = mpFrameDrawer->DrawFrame();
         //add circle to see the cull radius (need to manually change these params rn
-        cv::circle(im, cv::Point(184,166), 178, cv::Scalar(255, 0, 255), 1, cv::LINE_AA);
+        cv::circle(im, cv::Point(184,166), 178-30, cv::Scalar(255, 0, 255), 1, cv::LINE_AA);
 
         cv::imshow("ORB-SLAM2: Current Frame",im);
         cv::waitKey(mT);

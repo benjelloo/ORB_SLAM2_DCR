@@ -791,7 +791,7 @@ void ORBextractor::ComputeKeyPointsOctTree(vector<vector<KeyPoint> >& allKeypoin
         const int frameCenterX = 184;
         const int frameCenterY = 166;
         const int frameRadius = 178;
-        const int feather = 50; // # of pixels to decrease radius by
+        const int feather = 30; // # of pixels to decrease radius by
 
         for(int i=0; i<nRows; i++)
         {
@@ -829,12 +829,9 @@ void ORBextractor::ComputeKeyPointsOctTree(vector<vector<KeyPoint> >& allKeypoin
                         (*vit).pt.x+=j*wCell;
                         (*vit).pt.y+=i*hCell;
 
-                        // if the pt is out of the circular frame then don't add to vToDistributeKeys
-                        if ((*vit).pt.x > frameCenterX + frameRadius - feather || (*vit).pt.x < frameCenterX - frameRadius + feather || (*vit).pt.y > frameCenterY + frameRadius - feather || (*vit).pt.y < frameCenterY - frameRadius + feather) {
+                        // if the pt is within our specified circular frame then add to vToDistributeKeys
+                        if (std::sqrt(std::pow((*vit).pt.x-frameCenterX,2)+std::pow((*vit).pt.y-frameCenterY,2)) < frameRadius-feather){
                             std::cout << "point culled with coord: (" << (*vit).pt.x << ", " << (*vit).pt.y << ")" << endl;
-                            continue;
-                        }
-                        else {
                             vToDistributeKeys.push_back(*vit);
                         }
                     }

@@ -1,1 +1,1 @@
-./dcr ../Vocabulary/ORBvoc.txt orb_config.yaml ../VideoProcess/Output
+./dcr ../Vocabulary/ORBvoc.txt orb_config.yaml ../ImgProcess/Output

@@ -5,8 +5,8 @@ import os
 # Camera Settings
 fps = 30
 resizeWidth  = 501
-resizeHeigth = 501
-frameSize = (resizeWidth, resizeHeigth)
+resizeHeight = 501
+frameSize = (resizeWidth, resizeHeight)
 video_file = "vid4.mp4"
 video_capture = cv2.VideoCapture(video_file)
 

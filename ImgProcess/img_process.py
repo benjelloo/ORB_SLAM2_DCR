@@ -4,9 +4,9 @@ import os
 
 # Camera Settings
 fps = 30
-resizeWidth  = 700
-resizeHeigth = 493
-frameSize = (resizeWidth, resizeHeigth)
+resizeWidth  = 568
+resizeHeight = 400
+frameSize = (resizeWidth, resizeHeight)
 
 # Output Paths
 output_name = "Output"
@@ -14,7 +14,7 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 im_path = os.path.join(__location__, output_name + "\\rgb")
 txt_path = os.path.join(__location__, output_name)
 
-read_path = os.path.join(__location__, "vid")
+read_path = os.path.join(__location__, "Videos\\trial_2024_04_22_14-15-09")
 
 if not os.path.exists(im_path):
     os.makedirs(im_path)
@@ -51,11 +51,16 @@ with open(txt_path + "\\rgb.txt", 'w') as f:
 
     i = 0
     while True:
+    #for i in range(10):
 
-        if not os.path.exists(read_path + "\\" + str(i + 1) + ".png"):
+        frame = cv2.imread(read_path + "\\" + str(i+1) + ".png")
+
+        #imgNumber = str(i).zfill(5)
+        #frameFileName = str(f'{imgNumber}.png')
+        #frame = cv2.imread(read_path + "\\" + frameFileName)
+
+        if frame is None:
             break
-
-        frame = cv2.imread(read_path + "\\" + str(i + 1) + ".png")
 
         frame = cv2.resize(frame, frameSize)
 
@@ -66,7 +71,7 @@ with open(txt_path + "\\rgb.txt", 'w') as f:
         frameFileName = str(f'{imgNumber}.png')
         print(frameFileName)
         cv2.imwrite(im_path + "\\" + frameFileName, frame)
-        cv2.imshow('Video', frame)
+        #cv2.imshow('Video', frame)
         
         f.write(f"{timestamp} rgb/{frameFileName}\n")
     

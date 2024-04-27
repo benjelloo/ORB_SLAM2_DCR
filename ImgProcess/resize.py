@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 import os
 
-resizeWidth  = 700
-resizeHeigth = 493
+resizeWidth  = 568
+resizeHeigth = 400
 imgSize = (resizeWidth, resizeHeigth)
 
 # Output Paths

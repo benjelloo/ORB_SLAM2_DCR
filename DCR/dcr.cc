@@ -109,6 +109,8 @@ int main(int argc, char **argv)
             usleep((T-ttrack)*1e6);
     }
 
+    getchar();
+
     // Stop all threads
     SLAM.Shutdown();
 

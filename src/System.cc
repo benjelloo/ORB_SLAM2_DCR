@@ -319,6 +319,44 @@ void System::Shutdown()
         pangolin::BindToContext("ORB-SLAM2: Map Viewer");
 }
 
+void System::SaveMapPoints(const string& filename)
+{
+    cout << endl << "Saving map points to " << filename << " ..." << endl;
+
+    const vector<MapPoint*>& vpMPs = mpMap->GetAllMapPoints();
+    const vector<MapPoint*>& vpRefMPs = mpMap->GetReferenceMapPoints();
+
+    set<MapPoint*> spRefMPs(vpRefMPs.begin(), vpRefMPs.end());
+
+    if (vpMPs.empty())
+        return;
+
+    ofstream f;
+    f.open(filename.c_str());
+    f << fixed;
+
+    for (size_t i = 0, iend = vpMPs.size(); i < iend; i++)
+    {
+        if (vpMPs[i]->isBad() || spRefMPs.count(vpMPs[i]))
+            continue;
+        cv::Mat pos = vpMPs[i]->GetWorldPos();
+        //glVertex3f(pos.at<float>(0), pos.at<float>(1), pos.at<float>(2));
+        f << setprecision(9) << pos.at<float>(0) << "," << pos.at<float>(1) << "," << pos.at<float>(2) << "," << endl;
+    }
+    
+    for (set<MapPoint*>::iterator sit = spRefMPs.begin(), send = spRefMPs.end(); sit != send; sit++)
+    {
+        if ((*sit)->isBad())
+            continue;
+        cv::Mat pos = (*sit)->GetWorldPos();
+        //glVertex3f(pos.at<float>(0), pos.at<float>(1), pos.at<float>(2));
+        f << setprecision(9) << pos.at<float>(0) << "," << pos.at<float>(1) << "," << pos.at<float>(2) << "," << endl;
+    }
+
+    f.close();
+    cout << endl << "Points saved!" << endl;
+}
+
 void System::SaveTrajectoryTUM(const string &filename)
 {
     cout << endl << "Saving camera trajectory to " << filename << " ..." << endl;

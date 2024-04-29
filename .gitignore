@@ -24,4 +24,5 @@ lib/
 VideoProcess/Output_cropped
 VideoProcess/Output_cropped1
 VideoProcess/Output
+ImageProcess/Output
 ImageProcess/Videos

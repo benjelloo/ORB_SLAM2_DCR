@@ -23,6 +23,4 @@ build/
 lib/
 VideoProcess/Output_cropped
 VideoProcess/Output_cropped1
-VideoProcess/Output
-ImgProcess/Output
 ImgProcess/Videos
